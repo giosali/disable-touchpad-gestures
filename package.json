@@ -1,0 +1,25 @@
+{
+  "name": "disable-touchpad-gestures",
+  "version": "0.1.0",
+  "description": "Disable all multi-touch touchpad gestures",
+  "type": "module",
+  "private": true,
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/giosali/disable-touchpad-gestures.git"
+  },
+  "author": "Giovanni Salinas <gio_sali@outlook.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/giosali/disable-touchpad-gestures/issues"
+  },
+  "homepage": "https://github.com/giosali/disable-touchpad-gestures#readme",
+  "sideEffects": false,
+  "devDependencies": {
+    "typescript": "^5.6.2"
+  },
+  "dependencies": {
+    "@girs/gjs": "^4.0.0-beta.16",
+    "@girs/gnome-shell": "^46.0.2"
+  }
+}
