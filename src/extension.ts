@@ -7,8 +7,8 @@ import * as Main from "resource:///org/gnome/shell/ui/main.js";
 import TouchpadGesture from "./touchpadGesture.js";
 
 export default class DisableTouchpadGesturesExtension extends Extension {
-  overviewTouchpadGesture?: TouchpadGesture;
-  settings?: Gio.Settings;
+  overviewTouchpadGesture?: TouchpadGesture | null;
+  settings?: Gio.Settings | null;
 
   enable() {
     this.settings = this.getSettings();
@@ -39,8 +39,8 @@ export default class DisableTouchpadGesturesExtension extends Extension {
 
   disable() {
     this.overviewTouchpadGesture?.enable();
-    this.overviewTouchpadGesture = undefined;
+    this.overviewTouchpadGesture = null;
 
-    this.settings = undefined;
+    this.settings = null;
   }
 }
