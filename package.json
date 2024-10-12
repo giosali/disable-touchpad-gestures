@@ -1,7 +1,7 @@
 {
   "name": "disable-touchpad-gestures",
   "version": "0.1.0",
-  "description": "Disable all multi-touch touchpad gestures",
+  "description": "Disable multi-touch touchpad gestures",
   "type": "module",
   "private": true,
   "repository": {
