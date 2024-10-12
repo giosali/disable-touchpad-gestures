@@ -11,5 +11,10 @@
       <summary>Animation</summary>
       <description>Whether to animate window movement/resizing</description>
     </key>
+    <key name="disable-overview-touchpad-gesture" type="b">
+      <default>true</default>
+      <summary>Disable overview touchpad gesture</summary>
+      <description>Whether to disable the upward, 3-finger touchpad gesture that activates the overview</description>
+    </key>
   </schema>
 </schemalist>
