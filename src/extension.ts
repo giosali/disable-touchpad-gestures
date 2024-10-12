@@ -14,26 +14,9 @@ export default class DisableTouchpadGesturesExtension extends Extension {
     this.settings = this.getSettings();
 
     this.overviewTouchpadGesture = new TouchpadGesture(
-      Main.overview._swipeTracker._touchpadGesture
-    );
-
-    // Disables or enables the overview touchpad gesture depending
-    // on settings.
-    const variant = this.settings.get_value(
+      Main.overview._swipeTracker._touchpadGesture,
+      this.settings,
       "disable-overview-touchpad-gesture"
-    );
-    if (variant.get_type_string() === "b") {
-      const value: boolean = variant.get_boolean();
-      value
-        ? this.overviewTouchpadGesture?.disable()
-        : this.overviewTouchpadGesture?.enable();
-    }
-
-    this.settings?.connect(
-      "changed::disable-overview-touchpad-gesture",
-      this.overviewTouchpadGesture?.onSettingChanged.bind(
-        this.overviewTouchpadGesture
-      )
     );
   }
 

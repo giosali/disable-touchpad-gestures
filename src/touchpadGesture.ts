@@ -3,11 +3,30 @@ import GLib from "gi://GLib";
 import Gio from "gi://Gio";
 
 export default class TouchpadGesture {
-  private readonly event: string = "captured-event::touchpad";
+  private event: string | null = "captured-event::touchpad";
   private gesture: any;
+  private handlerId: number | null;
 
-  constructor(gesture: any) {
+  constructor(gesture: any, settings: Gio.Settings, key: string) {
     this.gesture = gesture;
+
+    this.toggleSetting(settings, key);
+
+    this.handlerId = settings.connect(
+      `changed::${key}`,
+      this.toggleSetting.bind(this)
+    );
+  }
+
+  public destroy(settings: Gio.Settings): void {
+    this.enable();
+
+    this.event = null;
+    this.gesture = null;
+    if (this.handlerId !== null) {
+      settings.disconnect(this.handlerId);
+      this.handlerId = null;
+    }
   }
 
   /**
@@ -36,16 +55,25 @@ export default class TouchpadGesture {
     );
   }
 
-  public onSettingChanged(settings: Gio.Settings, key: string): void {
-    const variant: GLib.Variant<any> = settings.get_value(key);
-    if (variant.get_type_string() === "b") {
-      const value: boolean = variant.get_boolean();
-      value ? this.disable() : this.enable();
-    }
+  private getStage(): any {
+    return global.stage as any;
   }
 
-  private getStage(): any {
-    const stage = global.stage as any;
-    return stage;
+  /**
+   * Disables or enables the Activities overview touchpad gesture depending on
+   * settings.
+   * @param settings
+   * @param key
+   */
+  private toggleSetting(settings: Gio.Settings, key: string): void {
+    try {
+      const variant: GLib.Variant<any> = settings.get_value(key);
+      if (variant.get_type_string() === "b") {
+        const value: boolean = variant.get_boolean();
+        value ? this.disable() : this.enable();
+      }
+    } catch (error) {
+      console.error(error);
+    }
   }
 }
