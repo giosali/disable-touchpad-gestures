@@ -24,7 +24,7 @@ export default class TouchpadGesture {
   }
 
   /**
-   * Reenables the actual, underlying touchpad gesture.
+   * Enables the actual, underlying touchpad gesture.
    */
   public enable(): void {
     const stage: any = this.getStage();
