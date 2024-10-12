@@ -1,4 +1,3 @@
-import Gtk from "gi://Gtk";
 import Adw from "gi://Adw";
 import Gio from "gi://Gio";
 import {
@@ -12,21 +11,24 @@ export default class GnomeRectanglePreferences extends ExtensionPreferences {
   fillPreferencesWindow(window: Adw.PreferencesWindow) {
     this._settings = this.getSettings();
 
+    // Page.
     const page = new Adw.PreferencesPage({
       title: _("General"),
       iconName: "dialog-information-symbolic",
     });
 
+    // Groups.
     const gestureGroup = new Adw.PreferencesGroup({
-      title: _("Gestures"),
-      description: _("Configure touchpad gestures"),
+      title: _("Touchpad Gestures"),
+      description: _("Disable or enable touchpad gestures"),
     });
     page.add(gestureGroup);
 
+    // Settings.
     const overviewTouchpadGestureDisabled = new Adw.SwitchRow({
-      title: _("Disabled"),
+      title: _("Overview touchpad gesture"),
       subtitle: _(
-        "Whether to disable the upward, 3-finger touchpad that activates the overview"
+        "Disables the upward, 3-finger gesture that activates the Activities overview"
       ),
     });
     gestureGroup.add(overviewTouchpadGestureDisabled);
