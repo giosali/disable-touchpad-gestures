@@ -1,28 +1,46 @@
-import Clutter from "gi://Clutter";
+import Gio from "gi://Gio";
 
 import { Extension } from "resource:///org/gnome/shell/extensions/extension.js";
 
 import * as Main from "resource:///org/gnome/shell/ui/main.js";
 
+import TouchpadGesture from "./touchpadGesture.js";
+
 export default class DisableTouchpadGesturesExtension extends Extension {
+  overviewTouchpadGesture?: TouchpadGesture;
+  settings?: Gio.Settings;
+
   enable() {
-    const stage = global.stage as any;
-    stage.disconnectObject(Main.overview._swipeTracker._touchpadGesture);
-    stage.connectObject(
-      "captured-event::touchpad",
-      (_: Clutter.Actor, __: Clutter.Event) => {},
+    this.settings = this.getSettings();
+
+    this.overviewTouchpadGesture = new TouchpadGesture(
       Main.overview._swipeTracker._touchpadGesture
+    );
+
+    // Disables or enables the overview touchpad gesture depending
+    // on settings.
+    const variant = this.settings.get_value(
+      "disable-overview-touchpad-gesture"
+    );
+    if (variant.get_type_string() === "b") {
+      const value: boolean = variant.get_boolean();
+      value
+        ? this.overviewTouchpadGesture?.disable()
+        : this.overviewTouchpadGesture?.enable();
+    }
+
+    this.settings?.connect(
+      "changed::disable-overview-touchpad-gesture",
+      this.overviewTouchpadGesture?.onSettingChanged.bind(
+        this.overviewTouchpadGesture
+      )
     );
   }
 
   disable() {
-    const gesture = Main.overview._swipeTracker._touchpadGesture;
-    const stage = global.stage as any;
-    stage.disconnectObject(gesture);
-    stage.connectObject(
-      "captured-event::touchpad",
-      gesture._handleEvent.bind(gesture),
-      gesture
-    );
+    this.overviewTouchpadGesture?.enable();
+    this.overviewTouchpadGesture = undefined;
+
+    this.settings = undefined;
   }
 }
