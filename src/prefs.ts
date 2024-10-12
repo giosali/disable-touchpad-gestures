@@ -31,53 +31,12 @@ export default class GnomeRectanglePreferences extends ExtensionPreferences {
     });
     gestureGroup.add(overviewTouchpadGestureDisabled);
 
-    const animationGroup = new Adw.PreferencesGroup({
-      title: _("Animation"),
-      description: _("Configure move/resize animation"),
-    });
-    page.add(animationGroup);
-
-    const animationEnabled = new Adw.SwitchRow({
-      title: _("Enabled"),
-      subtitle: _("Wether to animate windows"),
-    });
-    animationGroup.add(animationEnabled);
-
-    const paddingGroup = new Adw.PreferencesGroup({
-      title: _("Paddings"),
-      description: _("Configure the padding between windows"),
-    });
-    page.add(paddingGroup);
-
-    const paddingInner = new Adw.SpinRow({
-      title: _("Inner"),
-      subtitle: _("Padding between windows"),
-      adjustment: new Gtk.Adjustment({
-        lower: 0,
-        upper: 1000,
-        stepIncrement: 1,
-      }),
-    });
-    paddingGroup.add(paddingInner);
-
     window.add(page);
 
     this._settings!.bind(
       "disable-overview-touchpad-gesture",
       overviewTouchpadGestureDisabled,
       "active",
-      Gio.SettingsBindFlags.DEFAULT
-    );
-    this._settings!.bind(
-      "animate",
-      animationEnabled,
-      "active",
-      Gio.SettingsBindFlags.DEFAULT
-    );
-    this._settings!.bind(
-      "padding-inner",
-      paddingInner,
-      "value",
       Gio.SettingsBindFlags.DEFAULT
     );
   }
