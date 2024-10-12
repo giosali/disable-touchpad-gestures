@@ -17,6 +17,20 @@ export default class GnomeRectanglePreferences extends ExtensionPreferences {
       iconName: "dialog-information-symbolic",
     });
 
+    const gestureGroup = new Adw.PreferencesGroup({
+      title: _("Gestures"),
+      description: _("Configure touchpad gestures"),
+    });
+    page.add(gestureGroup);
+
+    const overviewTouchpadGestureDisabled = new Adw.SwitchRow({
+      title: _("Disabled"),
+      subtitle: _(
+        "Whether to disable the upward, 3-finger touchpad that activates the overview"
+      ),
+    });
+    gestureGroup.add(overviewTouchpadGestureDisabled);
+
     const animationGroup = new Adw.PreferencesGroup({
       title: _("Animation"),
       description: _("Configure move/resize animation"),
@@ -48,6 +62,12 @@ export default class GnomeRectanglePreferences extends ExtensionPreferences {
 
     window.add(page);
 
+    this._settings!.bind(
+      "disable-overview-touchpad-gesture",
+      overviewTouchpadGestureDisabled,
+      "active",
+      Gio.SettingsBindFlags.DEFAULT
+    );
     this._settings!.bind(
       "animate",
       animationEnabled,
