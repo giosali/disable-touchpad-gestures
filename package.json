@@ -9,7 +9,7 @@
     "url": "git+https://github.com/giosali/disable-touchpad-gestures.git"
   },
   "author": "Giovanni Salinas <gio_sali@outlook.com>",
-  "license": "MIT",
+  "license": "GPLv3",
   "bugs": {
     "url": "https://github.com/giosali/disable-touchpad-gestures/issues"
   },
