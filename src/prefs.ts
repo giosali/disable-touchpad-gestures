@@ -5,11 +5,16 @@ import {
   gettext as _,
 } from "resource:///org/gnome/Shell/Extensions/js/extensions/prefs.js";
 
-export default class GnomeRectanglePreferences extends ExtensionPreferences {
+// Extends the window type to include custom property.
+interface ExtendedPreferencesWindow extends Adw.PreferencesWindow {
   _settings?: Gio.Settings;
+}
 
+export default class GnomeRectanglePreferences extends ExtensionPreferences {
   fillPreferencesWindow(window: Adw.PreferencesWindow) {
-    this._settings = this.getSettings();
+    const extendedWindow = window as ExtendedPreferencesWindow;
+    const settings = this.getSettings();
+    extendedWindow._settings = settings;
 
     // Page.
     const page = new Adw.PreferencesPage({
@@ -35,7 +40,7 @@ export default class GnomeRectanglePreferences extends ExtensionPreferences {
 
     window.add(page);
 
-    this._settings!.bind(
+    settings!.bind(
       "disable-overview-touchpad-gesture",
       overviewTouchpadGestureDisabled,
       "active",
