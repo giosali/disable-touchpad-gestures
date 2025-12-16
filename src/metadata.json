@@ -4,5 +4,5 @@
   "uuid": "disable-touchpad-gestures@giosali.github.io",
   "url": "https://github.com/giosali/disable-touchpad-gestures",
   "settings-schema": "org.gnome.shell.extensions.disable-touchpad-gestures",
-  "shell-version": ["46"]
+  "shell-version": ["46", "47", "48", "49"]
 }
