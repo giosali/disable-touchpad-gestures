@@ -1,6 +1,6 @@
 {
   "name": "disable-touchpad-gestures",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "description": "Disable multi-touch touchpad gestures",
   "type": "module",
   "private": true,
